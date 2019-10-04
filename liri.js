@@ -7,25 +7,17 @@ var fs = require("fs");
 
 var spotify = new Spotify(keys.spotify);
 
-var concertThis = function (band) {
-    var url = "https://rest.bandsintown.com/artists/" + band + "/events?app_id=codingbootcamp"
-    axios.get(url).then(function (response) {
-        for (var i = 0; i < response.data.length && i < 3; i++) {
-            console.log(
-                "Venue: " + response.data[i].venue.name + "\n",
-                "City: " + response.data[i].venue.city + "\n",
-                "Time: " + moment(response.data[i].datetime).format('MM/DD/YYYY') + "\n",
-            );
-        }
-    });
-}
-
 // spotify this song
-var spotifyThis = function (song) {
-    if (song === null || song.trim().length === 0) {
-        song = "all me drake";
-    }
-    spotify.search({ type: "track", query: song },
+
+
+
+let input = process.argv[3]
+
+function spotifyThis() {
+    // if (song === null || song.trim().length === 0) {
+    //     song = "all me drake";
+    // }
+    spotify.search({ type: "track", query:`${input}`},
         function (err, data) {
             if (err) {
                 return console.log("Error occurred" + err);
@@ -34,7 +26,7 @@ var spotifyThis = function (song) {
             console.log(
                 " Song: " + data.tracks.items[0].name + "\n",
                 "Artist: " + data.tracks.items[0].artists[0].name + "\n",
-                "Preview: " + data.tracks.items[0].preview_url + "\n",
+                // "Preview: " + data.tracks.items[0].preview_url + "\n",
                 "Album: " + data.tracks.items[0].album.name + "\n",
             );
         });
